@@ -196,10 +196,10 @@ class correlationEstimate(Estimate):
 
     def quantize(self, quant_factor=0.2):
         as_pd = self.as_pd()
-        multipier = 1 / quant_factor
-        multiplied_pd = as_pd * multipier
+        multiplier = 1 / quant_factor
+        multiplied_pd = as_pd * multiplier
         multiplied_pd_rounded = multiplied_pd.round()
-        pd_quantized = multiplied_pd_rounded / multipier
+        pd_quantized = multiplied_pd_rounded / multiplier
 
         return correlationEstimate(
             values=pd_quantized.values, columns=pd_quantized.columns
@@ -242,11 +242,13 @@ class correlationEstimate(Estimate):
             [[np.nan] * len(new_asset_names)] * len(new_asset_names),
             columns=new_asset_names,
             index=new_asset_names,
+            dtype="float64",
         )
         l2 = pd.DataFrame(
             [[np.nan] * len(self.columns)] * len(new_asset_names),
             columns=self.columns,
             index=new_asset_names,
+            dtype="float64",
         )
         bottom_row = pd.concat([l2, r2], axis=1)
         both_rows = pd.concat([top_row, bottom_row], axis=0)

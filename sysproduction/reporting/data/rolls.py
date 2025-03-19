@@ -361,7 +361,7 @@ def get_or_infer_latest_price(new_multiple_prices, price_col: str = "PRICE"):
 
     If one can't be found, infer (There will always be a price in some column)
 
-    :param current_multiple_prices: futuresMultiplePrices
+    :param new_multiple_prices: futuresMultiplePrices
     :param price_col: one of 'PRICE','CARRY','FORWARD'
     :return: tuple: float, bool. Bool is true if the price is inferred, otherwise False
     """
@@ -458,8 +458,12 @@ def last_price_data_with_matched_contracts(df_of_col_and_col_to_use):
         ):
             row_to_copy = df_of_col_and_col_to_use[
                 ["Price_to_find", "Price_infer_from"]
-            ].iloc[data_row_idx]
-            matched_df_dict = matched_df_dict.append(row_to_copy)
+            ].iloc[[data_row_idx]]
+
+            if matched_df_dict.empty:
+                matched_df_dict = row_to_copy
+            else:
+                matched_df_dict = pd.concat([matched_df_dict, row_to_copy])
         else:
             # We're full
             break

@@ -5,6 +5,14 @@ import platform
 from setuptools import setup, find_packages
 from distutils.version import StrictVersion
 
+######################################################################
+# This method of installing the project is deprecated
+# Dependencies and package data are defined in 'pyproject.toml'
+# See the README
+# This file will be removed in a future release
+######################################################################
+
+
 if StrictVersion(platform.python_version()) <= StrictVersion("3.10.0"):
     print("pysystemtrade requires Python 3.10.0 or later. Exiting.", file=sys.stderr)
     sys.exit(1)
@@ -71,7 +79,7 @@ print(package_data)
 
 setup(
     name="pysystemtrade",
-    version="1.80",
+    version="1.8.2",
     author="Robert Carver",
     description=(
         "Python framework for running systems as in Robert Carver's book Systematic Trading"
@@ -91,7 +99,7 @@ setup(
         "numpy>=1.24.0",
         "scipy>=1.0.0",
         "pymongo==3.11.3",
-        "psutil==5.6.6",
+        "psutil==5.6.7",
         "pytest>6.2",
         "Flask>=2.0.1",
         "Werkzeug>=2.0.1",

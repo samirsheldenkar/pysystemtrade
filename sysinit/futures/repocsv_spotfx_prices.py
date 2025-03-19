@@ -6,12 +6,13 @@ WARNING WILL OVERWRITE EXISTING!
 from sysdata.csv.csv_spot_fx import csvFxPricesData
 from sysproduction.data.currency_data import dataCurrency
 
-db_fx_price_data = dataCurrency()
 
 if __name__ == "__main__":
     input("Will overwrite existing prices are you sure?! CTL-C to abort")
+    dataCurrency = dataCurrency()
 
     csv_fx_prices = csvFxPricesData()
+    db_fx_price_data = dataCurrency.db_fx_prices_data
 
     currency_code = input("Currency code? <return for ALL currencies> ")
     if currency_code == "":
@@ -23,6 +24,6 @@ if __name__ == "__main__":
         fx_prices = csv_fx_prices.get_fx_prices(currency_code)
         print(fx_prices)
 
-        db_fx_price_data.db_fx_prices_data.add_fx_prices(
+        db_fx_price_data.add_fx_prices(
             code=currency_code, fx_price_data=fx_prices, ignore_duplication=True
         )
