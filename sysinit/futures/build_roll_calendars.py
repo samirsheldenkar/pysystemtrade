@@ -477,10 +477,17 @@ def _matching_prices_from_paired_prices(paired_prices):
 
 
 def _valid_dates_from_matching_prices(paired_prices_matching, avoid_date):
-    valid_dates = paired_prices_matching.index
-    valid_dates.sort_values()
+    # Ensure the index is a DatetimeIndex
+    valid_dates = pd.to_datetime(paired_prices_matching.index)
+
+    # Sort the dates; necessary because we're about to perform a comparison operation
+    valid_dates = valid_dates.sort_values()
 
     if avoid_date is not None:
+        # Convert avoid_date to Timestamp if it's not already one
+        if not isinstance(avoid_date, pd.Timestamp):
+            avoid_date = pd.Timestamp(avoid_date)
+
         # Remove matching dates before avoid dates
         valid_dates = valid_dates[valid_dates > avoid_date]
 
