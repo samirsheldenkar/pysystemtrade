@@ -6,10 +6,10 @@
 import os
 import pandas as pd
 
-from sysinit.futures.multiple_and_adjusted_from_csv_to_arctic import init_arctic_with_csv_prices_for_code
+from sysinit.futures.multiple_and_adjusted_from_csv_to_db import init_db_with_csv_prices_for_code
 from sysinit.futures.multipleprices_from_db_prices_and_csv_calendars_to_db import \
     process_multiple_prices_single_instrument
-from sysinit.futures.rollcalendars_from_arcticprices_to_csv import build_and_write_roll_calendar
+from sysinit.futures.rollcalendars_from_db_prices_to_csv import build_and_write_roll_calendar
 from sysproduction.data.prices import get_valid_instrument_code_from_user
 
 roll_calendars_from_db = os.path.join(os.sep, 'home', 'samir', 'data', 'futures', 'roll_calendars_from_db')
@@ -70,4 +70,4 @@ except AssertionError as e:
 spliced = pd.concat([supplied, generated])
 spliced.to_csv(os.path.join(spliced_multiple_prices, instrument_code+'.csv'))
 
-init_arctic_with_csv_prices_for_code(instrument_code, multiple_price_datapath=spliced_multiple_prices)
+init_db_with_csv_prices_for_code(instrument_code, multiple_price_datapath=spliced_multiple_prices)
