@@ -12,22 +12,28 @@ from sysinit.futures.multipleprices_from_db_prices_and_csv_calendars_to_db impor
 from sysinit.futures.rollcalendars_from_db_prices_to_csv import build_and_write_roll_calendar
 from sysproduction.data.prices import get_valid_instrument_code_from_user
 
+# Get existing roll calendar (this should already have been updated from the repo supplied multiple prices)
 roll_calendars_from_db = os.path.join(os.sep, 'home', 'samir', 'data', 'futures', 'roll_calendars_from_db')
 if not os.path.exists(roll_calendars_from_db):
     os.makedirs(roll_calendars_from_db)
 
+# Get existing multiple prices (supplied from the repo)
 multiple_prices_from_db = os.path.join(os.sep, 'home', 'samir', 'data', 'futures', 'multiple_from_db')
 if not os.path.exists(multiple_prices_from_db):
     os.makedirs(multiple_prices_from_db)
 
+# Output path for spliced multiple prices (combining repo supplied with generated)
 spliced_multiple_prices = os.path.join(os.sep, 'home', 'samir', 'data', 'futures', 'multiple_prices_csv_spliced')
 if not os.path.exists(spliced_multiple_prices):
     os.makedirs(spliced_multiple_prices)
 
 instrument_code = get_valid_instrument_code_from_user(source="multiple")
+
+# Update the roll calendar based on downloaded contract prices (from IB)
 build_and_write_roll_calendar(instrument_code, output_datapath=roll_calendars_from_db)
 input("Review roll calendar, press Enter to continue")
 
+# Update multiple prices based on downloaded contract prices (from IB)
 process_multiple_prices_single_instrument(instrument_code,
                                           csv_multiple_data_path=multiple_prices_from_db,
                                           csv_roll_data_path=roll_calendars_from_db,
@@ -35,6 +41,7 @@ process_multiple_prices_single_instrument(instrument_code,
                                           ADD_TO_CSV=True)
 input("Review multiple prices, press Enter to continue")
 
+# Do comparison of supplied prices and generated prices to confirm that the latter is later than the former
 supplied_file = os.path.join(os.sep, 'home', 'samir', 'pysystemtrade', 'data', 'futures', 'multiple_prices_csv',
                              instrument_code + '.csv')  # repo data
 generated_file = os.path.join(multiple_prices_from_db, instrument_code + '.csv')
@@ -70,4 +77,5 @@ except AssertionError as e:
 spliced = pd.concat([supplied, generated])
 spliced.to_csv(os.path.join(spliced_multiple_prices, instrument_code+'.csv'))
 
+# Write spliced multiple prices to database (in this case parquet store)
 init_db_with_csv_prices_for_code(instrument_code, multiple_price_datapath=spliced_multiple_prices)
