@@ -1,25 +1,21 @@
 ## Plan Generated: Data Consolidation & Pipeline
 
 **Key Decisions Made:**
-- **Merge Strategy**: Smart Merge (Union, Overlap Check, Latest Wins on Conflict).
-- **Conflict Handling**: Discrepancies > `1e-6` are flagged. **Databento** used to verify/enrich conflicts in a post-merge step.
-- **Data Format**: **Parquet** (Verified schema: `OPEN`, `HIGH`, `LOW`, `FINAL`, `VOLUME`, `DatetimeIndex`).
-- **Destination**: `/home/samir/data/futures_consolidated`.
+- **Roll Logic**: Switched to **Volume/OI based** rolling with **Fixed Date Backstop**.
+  - Current system (price-only) does not support this.
+  - Will build `build_roll_calendars_custom.py` to implement this algo.
+- **Output Format**: Roll calendars to CSV (compatible with existing `roll_calendars_from_db`).
+- **Data Source**: Parquet files (Schema verified).
+- **Merge**: Custom Roll Calendars will merge/append to existing CSVs in `roll_calendars_from_db`.
 
 **Scope:**
-- IN: Consolidation script (Parquet), Databento Verification script, Pipeline execution.
-- OUT: Manual resolution (User provided with enriched report).
+- IN: `consolidate_futures.py`, `verify_conflicts_databento.py`, `build_roll_calendars_custom.py` (New Algo).
+- OUT: Modifying core system classes (We will use a standalone script for the custom logic to avoid regression).
 
 **Guardrails Applied:**
-- **Memory Safety**: Process per-contract.
-- **Verification**: Post-hoc verification with external truth source (Databento).
-
-**Auto-Resolved:**
-- [Schema]: Parquet files in all source folders have identical schema.
-- [System Compatibility]: Existing `futures` folder also contained Parquet, implying system compatibility.
+- **Verification**: Custom roll logic will be verified against dummy Volume/OI data to ensure crossover logic works.
 
 **Decisions Needed:**
-- None. Requirements clear.
-- **Momus Review**: [OKAY] - Plan approved.
+- None. Plan updated to reflect user review.
 
 Plan saved to: `.sisyphus/plans/data-consolidation.md`
