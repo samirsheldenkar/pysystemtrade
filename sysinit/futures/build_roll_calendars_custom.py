@@ -19,7 +19,7 @@ class RollCalendarBuilder:
         self.data_dir = Path(data_dir)
         self.output_dir = Path(output_dir)
         self.filename_pattern = re.compile(r"(.*)#(\d{8})\.parquet")
-        
+
         # Initialize access to system roll parameters
         self.roll_config = csvRollParametersData()
 
@@ -69,7 +69,9 @@ class RollCalendarBuilder:
 
         # Fetch roll parameters for this instrument
         try:
-            roll_params = self.roll_config.get_roll_parameters_for_instrument(instrument)
+            roll_params = self.roll_config.get_roll_parameters_for_instrument(
+                instrument
+            )
         except Exception:
             print(f"  Warning: No roll parameters found for {instrument}. Skipping.")
             return
@@ -115,15 +117,16 @@ class RollCalendarBuilder:
     def _calculate_roll_date(
         self, curr_path: Path, next_path: Path, curr_expiry: str, roll_params
     ) -> Optional[pd.Timestamp]:
-        
         # 1. Calculate the Ideal Roll Date (Backstop) from parameters
         #    curr_expiry is YYYYMMDD
         curr_contract_date = contractDate(curr_expiry)
-        contract_with_params = contractDateWithRollParameters(curr_contract_date, roll_params)
-        
+        contract_with_params = contractDateWithRollParameters(
+            curr_contract_date, roll_params
+        )
+
         # desired_roll_date is a datetime.datetime
         ideal_roll_date = contract_with_params.desired_roll_date
-        
+
         # Convert to pd.Timestamp for easier comparison with pandas indices
         ideal_roll_date_ts = pd.Timestamp(ideal_roll_date)
 
@@ -173,7 +176,7 @@ class RollCalendarBuilder:
                 # Check if it is within 5 business days of ideal roll date
                 d1 = crossover_date.date()
                 d2 = ideal_roll_date_ts.date()
-                
+
                 # busday_count returns positive if d1 < d2
                 bus_days_diff = np.busday_count(d1, d2)
 
