@@ -235,7 +235,7 @@ def main():
     )
     parser.add_argument(
         "--output-dir",
-        default="/home/samir/data/futures_consolidated/roll_calendars/",
+        default="/home/samir/data/futures_consolidated/roll_calendars_csv/",
         help="Directory to save roll calendars.",
     )
 

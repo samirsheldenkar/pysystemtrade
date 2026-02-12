@@ -162,7 +162,7 @@ def main():
     )
     parser.add_argument(
         "--output-dir",
-        default="/home/samir/data/futures_consolidated/multiple_prices/",
+        default="/home/samir/data/futures_consolidated/multiple_prices_csv/",
         help="Directory to save multiple prices CSV files.",
     )
 

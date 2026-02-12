@@ -95,7 +95,7 @@ def main():
     )
     parser.add_argument(
         "--output-dir",
-        default="/home/samir/data/futures_consolidated/adjusted_prices/",
+        default="/home/samir/data/futures_consolidated/adjusted_prices_csv/",
         help="Directory to save adjusted prices CSV files.",
     )
     parser.add_argument(
