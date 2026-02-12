@@ -29,3 +29,9 @@ venv/
 
 # libreoffice
 .~lock.*
+
+# coding plans
+.sisyphus
+.opencode
+.codex
+.antigravity

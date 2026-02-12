@@ -124,4 +124,6 @@ if __name__ == "__main__":
     instrument_code = get_valid_instrument_code_from_user(source="single")
     ## MODIFY DATAPATH IF REQUIRED
     # build_and_write_roll_calendar(instrument_code, output_datapath=arg_not_supplied)
-    build_and_write_roll_calendar(instrument_code, output_datapath="/home/samir/data/roll_calendars_from_db")
+    build_and_write_roll_calendar(
+        instrument_code, output_datapath="/home/samir/data/roll_calendars_from_db"
+    )

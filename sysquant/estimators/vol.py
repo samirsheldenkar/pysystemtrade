@@ -59,7 +59,7 @@ def robust_vol_calc(
       floor is zero (*default* 100)
     :type floor_min_periods: int
 
-    :param backfill: Uses the first calculated vol for initial period 
+    :param backfill: Uses the first calculated vol for initial period
       (note this therrefore has some forward looking bias)
     :type backfill: bool
 
@@ -134,7 +134,7 @@ def mixed_vol_calc(
 ) -> pd.Series:
     """
     Mixed exponential volatility calculation, assuming daily series of prices
-    Applies a proportion to long-term (slow vol) based on N years lookback 
+    Applies a proportion to long-term (slow vol) based on N years lookback
     We apply an absolute minimum level of vol (absmin);
     Note however implementation does not apply a separate volfloor based on lowest vol over recent history
 
@@ -151,7 +151,7 @@ def mixed_vol_calc(
       0.0= not used
     :type absmin: float or None
 
-    :param backfill: Uses the first calculated vol for initial period 
+    :param backfill: Uses the first calculated vol for initial period
       (note this therrefore has some forward looking bias)
     :type backfill: bool
 
