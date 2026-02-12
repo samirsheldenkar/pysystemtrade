@@ -5,16 +5,23 @@ from pathlib import Path
 import re
 import sys
 from typing import List, Dict, Tuple, Optional
+import datetime
+
+from sysdata.csv.csv_roll_parameters import csvRollParametersData
+from sysobjects.contract_dates_and_expiries import contractDate
+from sysobjects.rolls import contractDateWithRollParameters
 
 DATE_INDEX_NAME = "DATE_TIME"
 
 
 class RollCalendarBuilder:
-    def __init__(self, data_dir: str, output_dir: str, backstop_days: int):
+    def __init__(self, data_dir: str, output_dir: str):
         self.data_dir = Path(data_dir)
         self.output_dir = Path(output_dir)
-        self.backstop_days = backstop_days
         self.filename_pattern = re.compile(r"(.*)#(\d{8})\.parquet")
+        
+        # Initialize access to system roll parameters
+        self.roll_config = csvRollParametersData()
 
     def run(self):
         if not self.data_dir.exists():
@@ -60,6 +67,13 @@ class RollCalendarBuilder:
             print(f"  Not enough contracts for {instrument} to build a calendar.")
             return
 
+        # Fetch roll parameters for this instrument
+        try:
+            roll_params = self.roll_config.get_roll_parameters_for_instrument(instrument)
+        except Exception:
+            print(f"  Warning: No roll parameters found for {instrument}. Skipping.")
+            return
+
         new_rolls = []
 
         for i in range(len(files) - 1):
@@ -70,7 +84,9 @@ class RollCalendarBuilder:
             next_contract = next_expiry
 
             try:
-                roll_date = self._calculate_roll_date(curr_path, next_path, curr_expiry)
+                roll_date = self._calculate_roll_date(
+                    curr_path, next_path, curr_expiry, roll_params
+                )
             except Exception as e:
                 print(
                     f"  Error calculating roll for {curr_contract} -> {next_contract}: {e}"
@@ -97,8 +113,21 @@ class RollCalendarBuilder:
         self._save_calendar(instrument, df_new)
 
     def _calculate_roll_date(
-        self, curr_path: Path, next_path: Path, curr_expiry: str
+        self, curr_path: Path, next_path: Path, curr_expiry: str, roll_params
     ) -> Optional[pd.Timestamp]:
+        
+        # 1. Calculate the Ideal Roll Date (Backstop) from parameters
+        #    curr_expiry is YYYYMMDD
+        curr_contract_date = contractDate(curr_expiry)
+        contract_with_params = contractDateWithRollParameters(curr_contract_date, roll_params)
+        
+        # desired_roll_date is a datetime.datetime
+        ideal_roll_date = contract_with_params.desired_roll_date
+        
+        # Convert to pd.Timestamp for easier comparison with pandas indices
+        ideal_roll_date_ts = pd.Timestamp(ideal_roll_date)
+
+        # 2. Check overlap and Volume/OI crossover
         df_curr = pd.read_parquet(curr_path)
         df_next = pd.read_parquet(next_path)
 
@@ -110,7 +139,7 @@ class RollCalendarBuilder:
         common_idx = df_curr.index.intersection(df_next.index)
 
         if len(common_idx) == 0:
-            return self._get_backstop_date(curr_expiry)
+            return ideal_roll_date_ts
 
         df_curr = df_curr.loc[common_idx]
         df_next = df_next.loc[common_idx]
@@ -137,37 +166,29 @@ class RollCalendarBuilder:
             if mask.any():
                 crossover_date = mask.idxmax()
 
-        backstop_date = self._get_backstop_date(curr_expiry)
-
+        # 3. Validate Crossover Date
         if crossover_date:
-            if crossover_date > backstop_date:
-                return backstop_date
-            else:
-                return crossover_date
-        else:
-            return backstop_date
+            # Check if crossover date is BEFORE the ideal roll date
+            if crossover_date < ideal_roll_date_ts:
+                # Check if it is within 5 business days of ideal roll date
+                d1 = crossover_date.date()
+                d2 = ideal_roll_date_ts.date()
+                
+                # busday_count returns positive if d1 < d2
+                bus_days_diff = np.busday_count(d1, d2)
 
-    def _get_backstop_date(self, expiry_str: str) -> pd.Timestamp:
-        # Handle YYYYMM00 format (pysystemtrade convention for monthly contracts)
-        if expiry_str.endswith("00"):
-            # Assume 15th of the month as proxy expiry
-            expiry_str_fixed = expiry_str[:-2] + "15"
-            try:
-                expiry_date = pd.to_datetime(expiry_str_fixed, format="%Y%m%d")
-            except ValueError:
-                # Fallback to 1st of month
-                expiry_date = pd.to_datetime(expiry_str[:-2] + "01", format="%Y%m%d")
-        else:
-            try:
-                expiry_date = pd.to_datetime(expiry_str, format="%Y%m%d")
-            except ValueError:
-                # Try parsing as YYYYMM if length is 6
-                if len(expiry_str) == 6:
-                    expiry_date = pd.to_datetime(expiry_str + "15", format="%Y%m%d")
+                if bus_days_diff <= 5:
+                    return crossover_date
                 else:
-                    raise ValueError(f"Cannot parse expiry date: {expiry_str}")
-
-        return expiry_date - pd.Timedelta(days=self.backstop_days)
+                    # Crossover is too early (more than 5 days before ideal)
+                    return ideal_roll_date_ts
+            else:
+                # Crossover is AFTER or ON the ideal roll date
+                # We want to roll ideally, unless volume forced us earlier.
+                # Since volume didn't force us earlier, we roll at the ideal date.
+                return ideal_roll_date_ts
+        else:
+            return ideal_roll_date_ts
 
     def _save_calendar(self, instrument: str, df_new: pd.DataFrame):
         output_path = self.output_dir / f"{instrument}.csv"
@@ -217,16 +238,10 @@ def main():
         default="/home/samir/data/futures_consolidated/roll_calendars/",
         help="Directory to save roll calendars.",
     )
-    parser.add_argument(
-        "--backstop-days",
-        type=int,
-        default=5,
-        help="Number of days before expiry to force roll.",
-    )
 
     args = parser.parse_args()
 
-    builder = RollCalendarBuilder(args.data_dir, args.output_dir, args.backstop_days)
+    builder = RollCalendarBuilder(args.data_dir, args.output_dir)
     builder.run()
 
 
