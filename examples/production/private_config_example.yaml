@@ -39,3 +39,9 @@ ib_idoffset: 1 # the default
 mongo_host: 'localhost' # can be elsewhere
 mongo_db: 'production' # fits with all the documentation
 
+# MLflow tracking - if this section is missing, MLflow export is silently skipped
+# Install with: pip install pysystemtrade[mlflow]
+#mlflow:
+#  tracking_uri: 'http://your-mlflow-server:5000'
+#  experiment_name: 'pysystemtrade_backtests'  # optional, defaults to pysystemtrade_backtests
+
