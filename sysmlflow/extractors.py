@@ -11,7 +11,12 @@ from typing import Dict, List, Optional, Any
 import numpy as np
 import pandas as pd
 
-from sysmlflow.utils import safe_float, sanitise_metric_name, is_scalar, truncate_param_value
+from sysmlflow.utils import (
+    safe_float,
+    sanitise_metric_name,
+    is_scalar,
+    truncate_param_value,
+)
 
 
 # ──────────────────────────────────────────────────────────────────────
@@ -66,9 +71,7 @@ def extract_portfolio_metrics(system) -> Dict[str, float]:
     # Gross stats (key subset)
     for stat_name in ["sharpe", "ann_mean", "ann_std"]:
         try:
-            value = safe_float(
-                getattr(portfolio_curve.percent.gross, stat_name)()
-            )
+            value = safe_float(getattr(portfolio_curve.percent.gross, stat_name)())
             if value is not None:
                 metrics[f"portfolio/gross/{stat_name}"] = value
         except Exception:
@@ -77,9 +80,7 @@ def extract_portfolio_metrics(system) -> Dict[str, float]:
     # Costs stats (key subset)
     for stat_name in ["ann_mean", "ann_std"]:
         try:
-            value = safe_float(
-                getattr(portfolio_curve.percent.costs, stat_name)()
-            )
+            value = safe_float(getattr(portfolio_curve.percent.costs, stat_name)())
             if value is not None:
                 metrics[f"portfolio/costs/{stat_name}"] = value
         except Exception:
@@ -240,7 +241,9 @@ def _flatten_to_params(
 
         if isinstance(value, dict):
             _flatten_to_params(
-                value, params, full_key,
+                value,
+                params,
+                full_key,
                 max_depth=max_depth,
                 current_depth=current_depth + 1,
             )

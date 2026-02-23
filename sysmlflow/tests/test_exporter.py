@@ -42,11 +42,27 @@ def mock_system():
 
     # All stat methods return 0.5
     for attr in [
-        "sharpe", "sortino", "calmar", "ann_mean", "ann_std",
-        "avg_drawdown", "worst_drawdown", "time_in_drawdown",
-        "hitrate", "profitfactor", "gaintolossratio",
-        "t_stat", "p_value", "skew", "min", "max",
-        "median", "mean", "std", "avg_loss", "avg_gain",
+        "sharpe",
+        "sortino",
+        "calmar",
+        "ann_mean",
+        "ann_std",
+        "avg_drawdown",
+        "worst_drawdown",
+        "time_in_drawdown",
+        "hitrate",
+        "profitfactor",
+        "gaintolossratio",
+        "t_stat",
+        "p_value",
+        "skew",
+        "min",
+        "max",
+        "median",
+        "mean",
+        "std",
+        "avg_loss",
+        "avg_gain",
     ]:
         getattr(mock_portfolio.percent, attr).return_value = 0.5
         getattr(mock_portfolio.percent.gross, attr).return_value = 0.6
@@ -73,9 +89,7 @@ class TestMLflowBacktestExporter:
         exporter = MLflowBacktestExporter(config=mock_config)
         exporter.export(mock_system, run_name="test_run")
 
-        mock_mlflow.set_tracking_uri.assert_called_once_with(
-            "http://test-server:5000"
-        )
+        mock_mlflow.set_tracking_uri.assert_called_once_with("http://test-server:5000")
         mock_mlflow.set_experiment.assert_called_once_with("test_experiment")
         mock_mlflow.start_run.assert_called_once()
 

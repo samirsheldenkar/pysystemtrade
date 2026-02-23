@@ -44,9 +44,7 @@ class MLflowConfig:
         if not tracking_uri:
             return None
 
-        experiment_name = mlflow_section.get(
-            "experiment_name", DEFAULT_EXPERIMENT_NAME
-        )
+        experiment_name = mlflow_section.get("experiment_name", DEFAULT_EXPERIMENT_NAME)
 
         return MLflowConfig(
             tracking_uri=tracking_uri,
@@ -60,9 +58,7 @@ class MLflowConfig:
         if not tracking_uri:
             return None
 
-        experiment_name = config_dict.get(
-            "experiment_name", DEFAULT_EXPERIMENT_NAME
-        )
+        experiment_name = config_dict.get("experiment_name", DEFAULT_EXPERIMENT_NAME)
 
         return MLflowConfig(
             tracking_uri=tracking_uri,
