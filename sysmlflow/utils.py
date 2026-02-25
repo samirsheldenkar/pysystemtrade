@@ -62,6 +62,8 @@ def dataframe_to_temp_csv(df: pd.DataFrame, name: str) -> str:
 
     The caller is responsible for cleanup (or let the OS handle it).
     """
+    if df.index.name is None:
+        df.index.name = "date"
     temp_dir = tempfile.mkdtemp(prefix="sysmlflow_")
     filename = f"{name}.csv"
     filepath = os.path.join(temp_dir, filename)
