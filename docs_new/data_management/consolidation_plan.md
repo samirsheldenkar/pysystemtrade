@@ -16,18 +16,20 @@
 > [!CAUTION]
 > The `futures/` contract prices (starting Apr 2024) are disconnected from its multiple/adjusted prices (ending Mar 2024). The original contract data no longer exists.
 
-**Cross-instrument gap summary** (252 instruments):
-
 | Category | Count | Description |
 |----------|-------|-------------|
-| No gap (overlap) | 9 | Contract prices overlap multiple prices end (SP500, GOLD, AUD, GBP, etc.) |
-| Gap, covered by `pst-csv-data` | 36 | CSVs extending to Sep 2025 bridge the gap |
-| Gap, 8-21 days | 150 | Most common gap size |
-| Gap, 22-30 days | 18 | Medium gaps |
-| Gap, >100 days | 32 | Large gaps (Asian/niche markets, up to 238 days) |
-| No contract data at all | 7 | Only exist in canonical derived data |
+| No gap (overlap) | 9 | SP500, GOLD, AUD, GBP, etc. |
+| Gap, covered by `pst-csv-data` | 36 | CSVs extending to Sep 2025 |
+| Gap, 8-21 days | 150 | Most common |
+| Gap, 22-30 days | 18 | Medium |
+| Gap, >100 days | 32 | Asian/niche markets, up to 238 days |
+| No contract data | 7 | Only in canonical derived data |
 
-**Total missing contracts needed to fill all gaps: 444 across 200 instruments** (each instrument needs 2-3 contracts: PRICE, CARRY, FORWARD from the last row of its multiple prices series).
+**Total missing contracts to fill all gaps: 444 across 200 instruments.**
+
+### `pst-csv-data` Frequency
+
+Both pst-csv and canonical data are **hourly** (not daily). However, canonical has sub-hourly data for some instruments (15-min intervals for BUND, AEX, etc.), resulting in more rows. For the 40 pst-csv instruments, a merge approach (append only post-2024-03-28 rows) preserves the canonical sub-hourly history.
 
 ---
 
@@ -50,56 +52,16 @@ python -m sysinit.futures.consolidate_futures \
 
 ---
 
-### Step 2: Build Baseline Derived Data
+### Step 2: Identify and Source Gap-Filling Contracts
 
-```bash
-cp -r /home/samir/data/futures/futures_multiple_prices /home/samir/data/consolidated/futures_multiple_prices
-cp -r /home/samir/data/futures/futures_adjusted_prices /home/samir/data/consolidated/futures_adjusted_prices
-cp -r /home/samir/data/futures/roll_calendars_from_db /home/samir/data/consolidated/roll_calendars
-cp -r /home/samir/data/futures/spotfx_prices /home/samir/data/consolidated/spotfx_prices
-```
-
-Overlay `pst-csv-data` for the 40 instruments it covers (extends to Sep 2025):
-
-```python
-import pandas as pd, os
-
-PST_MP = '/home/samir/pst-csv-data/data/multiple_prices_csv'
-PST_AP = '/home/samir/pst-csv-data/data/adjusted_prices_csv'
-OUT_MP = '/home/samir/data/consolidated/futures_multiple_prices'
-OUT_AP = '/home/samir/data/consolidated/futures_adjusted_prices'
-
-for f in os.listdir(PST_MP):
-    if not f.endswith('.csv'): continue
-    inst = f.replace('.csv', '')
-    mp = pd.read_csv(os.path.join(PST_MP, f), index_col=0, parse_dates=True)
-    mp.to_parquet(os.path.join(OUT_MP, f'{inst}.parquet'))
-    ap_f = os.path.join(PST_AP, f)
-    if os.path.exists(ap_f):
-        ap = pd.read_csv(ap_f, index_col=0, parse_dates=True)
-        ap.to_parquet(os.path.join(OUT_AP, f'{inst}.parquet'))
-    print(f"  Updated {inst}")
-```
-
----
-
-### Step 3: Identify and Source Gap-Filling Contracts
-
-**Goal**: Generate a manifest of the 444 specific contracts needed to fill the gap between canonical multiple/adjusted prices (ending Mar 2024) and the earliest available contract prices, then retrieve them from Barchart or Databento.
-
-**Phase 1 — Generate contract manifest** (save as `/tmp/generate_gap_manifest.py`):
+**Phase 1 — Generate manifest** (`/tmp/generate_gap_manifest.py`):
 
 ```python
 """
-Generate a CSV manifest of all contracts needed to fill the gap between
-the canonical multiple/adjusted prices and the available contract prices.
-
+Generate CSV manifest of contracts needed to fill gaps.
 Output: /home/samir/data/consolidated/gap_contracts_manifest.csv
-Columns: instrument, contract_date, gap_start, gap_end, gap_days, role, data_needed_from, data_needed_to
 """
-import pandas as pd
-import os
-import glob
+import pandas as pd, os, glob
 
 MP_DIR = '/home/samir/data/futures/futures_multiple_prices'
 CP_DIRS = [
@@ -116,20 +78,14 @@ PST_INSTRUMENTS = set(
 OUTPUT = '/home/samir/data/consolidated/gap_contracts_manifest.csv'
 
 rows = []
-
 for mp_file in sorted(os.listdir(MP_DIR)):
-    if not mp_file.endswith('.parquet'):
-        continue
+    if not mp_file.endswith('.parquet'): continue
     inst = mp_file.replace('.parquet', '')
-
-    # Skip instruments covered by pst-csv-data
-    if inst in PST_INSTRUMENTS:
-        continue
+    if inst in PST_INSTRUMENTS: continue
 
     mp = pd.read_parquet(os.path.join(MP_DIR, mp_file))
     mp_end = mp.index.max()
 
-    # Find earliest contract data across all sources
     cp_min = pd.Timestamp.max
     for d in CP_DIRS:
         for f in glob.glob(os.path.join(d, f'{inst}#*.parquet')):
@@ -137,14 +93,10 @@ for mp_file in sorted(os.listdir(MP_DIR)):
             if len(df) > 0 and df.index.min() < cp_min:
                 cp_min = df.index.min()
 
-    if cp_min == pd.Timestamp.max:
-        continue  # no contract data at all
-
+    if cp_min == pd.Timestamp.max: continue
     gap_days = (cp_min - mp_end).days
-    if gap_days <= 1:
-        continue  # no gap
+    if gap_days <= 1: continue
 
-    # Get last contract references from multiple prices
     last_row = mp.iloc[-1]
     contracts = {
         'PRICE': str(int(last_row['PRICE_CONTRACT'])),
@@ -152,92 +104,53 @@ for mp_file in sorted(os.listdir(MP_DIR)):
         'FORWARD': str(int(last_row['FORWARD_CONTRACT'])),
     }
 
-    # Determine the date range we need data for (gap period)
-    gap_start = mp_end + pd.Timedelta(days=1)
-    gap_end = cp_min - pd.Timedelta(days=1)
+    gap_start = (mp_end + pd.Timedelta(days=1)).strftime('%Y-%m-%d')
+    gap_end = (cp_min - pd.Timedelta(days=1)).strftime('%Y-%m-%d')
 
     seen = set()
     for role, contract_date in contracts.items():
-        if contract_date in seen:
-            continue  # avoid duplicates (e.g., CARRY == FORWARD)
+        if contract_date in seen: continue
         seen.add(contract_date)
         rows.append({
-            'instrument': inst,
-            'contract_date': contract_date,
-            'role': role,
-            'gap_start': gap_start.strftime('%Y-%m-%d'),
-            'gap_end': gap_end.strftime('%Y-%m-%d'),
-            'gap_days': gap_days,
-            'data_needed_from': gap_start.strftime('%Y-%m-%d'),
-            'data_needed_to': gap_end.strftime('%Y-%m-%d'),
+            'instrument': inst, 'contract_date': contract_date, 'role': role,
+            'gap_start': gap_start, 'gap_end': gap_end, 'gap_days': gap_days,
         })
 
 manifest = pd.DataFrame(rows)
 manifest.to_csv(OUTPUT, index=False)
-
-print(f"Manifest written to {OUTPUT}")
-print(f"Total contracts to retrieve: {len(manifest)}")
-print(f"Total instruments: {manifest['instrument'].nunique()}")
-print(f"\nGap distribution:")
-print(manifest.groupby('instrument')[['gap_days']].first()['gap_days'].describe())
-print(f"\nSample rows:")
+print(f"Manifest: {len(manifest)} contracts across {manifest['instrument'].nunique()} instruments")
 print(manifest.head(10).to_string(index=False))
 ```
 
-**Phase 2 — Retrieve data using Barchart or Databento**
-
-The manifest CSV has the format:
-
-| instrument | contract_date | role | gap_start | gap_end | gap_days | data_needed_from | data_needed_to |
-|-----------|--------------|------|-----------|---------|----------|-----------------|---------------|
-| BUND | 20240600 | PRICE | 2024-03-29 | 2024-04-17 | 21 | 2024-03-29 | 2024-04-17 |
-| BUND | 20240900 | CARRY | 2024-03-29 | 2024-04-17 | 21 | 2024-03-29 | 2024-04-17 |
-
 > [!IMPORTANT]
-> The `instrument` column uses pysystemtrade instrument codes (e.g., `BUND`, `CRUDE_W`). These need to be mapped to exchange symbols for the data provider. pysystemtrade maintains this mapping in [instrumentconfig.csv](file:///home/samir/pysystemtrade/data/futures/csvconfig/instrumentconfig.csv) and optionally in the IB config files. A mapping step will be needed for Barchart (which uses its own symbol convention) or Databento (which uses exchange-native symbols like `ZB` for BUND on CBOT).
+> The `instrument` column uses pysystemtrade codes (e.g., `BUND`, `CRUDE_W`). These need mapping to exchange symbols for data providers. pysystemtrade maintains mappings in [instrumentconfig.csv](file:///home/samir/pysystemtrade/data/futures/csvconfig/instrumentconfig.csv).
+>
+> - **Barchart**: symbols like `ZBM24` (root + month code + 2-digit year). Month codes: F=Jan, G=Feb, H=Mar, J=Apr, K=May, M=Jun, N=Jul, Q=Aug, U=Sep, V=Oct, X=Nov, Z=Dec
+> - **Databento**: exchange-native symbols with venue prefix (e.g., `GLBX.MBO`). Python API: `databento.Historical().timeseries.get_range()`
 
-**Option A — Barchart**:
-- Barchart uses symbols like `ZBM24` (symbol + month code + 2-digit year)
-- Historical OHLCV data available via API or manual download
-- Contract month codes: F=Jan, G=Feb, H=Mar, J=Apr, K=May, M=Jun, N=Jul, Q=Aug, U=Sep, V=Oct, X=Nov, Z=Dec
+**Phase 2 — Retrieve data** using Barchart or Databento based on the manifest.
 
-**Option B — Databento**:
-- Uses exchange-native symbols with venue prefix (e.g., `GLBX.MBO` for CME Globex)
-- Python API: `databento.Historical().timeseries.get_range()`
-- Can retrieve OHLCV bars directly for specific contract months
-- More granular control over frequency (daily, hourly, etc.)
-
-**Phase 3 — Ingest retrieved data**
-
-After downloading, convert to pysystemtrade's parquet format:
+**Phase 3 — Ingest** retrieved data into consolidated contract prices:
 
 ```python
-import pandas as pd
+import pandas as pd, os
 
 def ingest_gap_contract(instrument, contract_date, df, dest_dir):
-    """
-    Write a gap-filling contract's data to the consolidated directory.
-    df should have DatetimeIndex and columns: OPEN, HIGH, LOW, FINAL (close), VOLUME
-    """
-    output_path = f"{dest_dir}/{instrument}#{contract_date}.parquet"
-    
-    # If file already exists (from Step 1 merge), merge with gap data
-    if os.path.exists(output_path):
-        existing = pd.read_parquet(output_path)
-        # Only add rows that don't already exist
+    """df should have DatetimeIndex and columns: OPEN, HIGH, LOW, FINAL, VOLUME"""
+    path = f"{dest_dir}/{instrument}#{contract_date}.parquet"
+    if os.path.exists(path):
+        existing = pd.read_parquet(path)
         new_rows = df[~df.index.isin(existing.index)]
         if len(new_rows) > 0:
             combined = pd.concat([new_rows, existing]).sort_index()
-            combined.to_parquet(output_path)
-            print(f"  Extended {instrument}#{contract_date}: +{len(new_rows)} rows")
+            combined.to_parquet(path)
     else:
-        df.to_parquet(output_path)
-        print(f"  Created {instrument}#{contract_date}: {len(df)} rows")
+        df.to_parquet(path)
 ```
 
 ---
 
-### Step 4: Configure Parquet Store
+### Step 3: Configure Parquet Store
 
 ```yaml
 # private_config.yaml
@@ -246,9 +159,64 @@ parquet_store: /home/samir/data/consolidated
 
 ---
 
-### Step 5: Extend Roll Calendars
+### Step 4: Build Baseline Derived Data
 
-Use [build_roll_calendars_custom.py](file:///home/samir/pysystemtrade/sysinit/futures/adhoc/build_roll_calendars_custom.py) (merges with existing):
+> [!NOTE]
+> This step comes **after** all raw contract data is gathered (Steps 1-2), so that derived data generation has the complete dataset available.
+
+```bash
+# Copy canonical deep-history derived data as starting point
+cp -r /home/samir/data/futures/futures_multiple_prices /home/samir/data/consolidated/futures_multiple_prices
+cp -r /home/samir/data/futures/futures_adjusted_prices /home/samir/data/consolidated/futures_adjusted_prices
+cp -r /home/samir/data/futures/roll_calendars_from_db /home/samir/data/consolidated/roll_calendars
+cp -r /home/samir/data/futures/spotfx_prices /home/samir/data/consolidated/spotfx_prices
+```
+
+**Merge** pst-csv-data for the 40 instruments (append post-2024-03-28 rows only, preserving canonical sub-hourly history):
+
+```python
+import pandas as pd, os
+
+PST_MP = '/home/samir/pst-csv-data/data/multiple_prices_csv'
+PST_AP = '/home/samir/pst-csv-data/data/adjusted_prices_csv'
+OUT_MP = '/home/samir/data/consolidated/futures_multiple_prices'
+OUT_AP = '/home/samir/data/consolidated/futures_adjusted_prices'
+
+for f in sorted(os.listdir(PST_MP)):
+    if not f.endswith('.csv'): continue
+    inst = f.replace('.csv', '')
+    
+    # Multiple prices: merge (keep canonical history, append pst-csv extension)
+    pst = pd.read_csv(os.path.join(PST_MP, f), index_col=0, parse_dates=True)
+    can_f = os.path.join(OUT_MP, f'{inst}.parquet')
+    if os.path.exists(can_f):
+        can = pd.read_parquet(can_f)
+        can_end = can.index.max()
+        new_rows = pst[pst.index > can_end]
+        merged = pd.concat([can, new_rows]).sort_index()
+        merged.to_parquet(can_f)
+        print(f"  {inst}: appended {len(new_rows)} rows (canonical={len(can)}, now={len(merged)})")
+    else:
+        pst.to_parquet(can_f)
+        print(f"  {inst}: created from pst-csv ({len(pst)} rows)")
+    
+    # Adjusted prices: same merge
+    ap_pst_f = os.path.join(PST_AP, f)
+    ap_can_f = os.path.join(OUT_AP, f'{inst}.parquet')
+    if os.path.exists(ap_pst_f):
+        ap_pst = pd.read_csv(ap_pst_f, index_col=0, parse_dates=True)
+        if os.path.exists(ap_can_f):
+            ap_can = pd.read_parquet(ap_can_f)
+            ap_new = ap_pst[ap_pst.index > ap_can.index.max()]
+            ap_merged = pd.concat([ap_can, ap_new]).sort_index()
+            ap_merged.to_parquet(ap_can_f)
+        else:
+            ap_pst.to_parquet(ap_can_f)
+```
+
+---
+
+### Step 5: Extend Roll Calendars
 
 ```bash
 python -m sysinit.futures.adhoc.build_roll_calendars_custom \
@@ -260,7 +228,7 @@ python -m sysinit.futures.adhoc.build_roll_calendars_custom \
 
 ### Step 6: Extend Multiple & Adjusted Prices
 
-Use the production incremental update (preserves deep history):
+Production incremental update (preserves deep history):
 
 ```python
 from sysdata.data_blob import dataBlob
@@ -297,25 +265,23 @@ For instruments in merged contract prices that don't exist in canonical derived 
 
 ```
 /home/samir/data/consolidated/
-├── futures_contract_prices/     # Merged from all 5 sources + gap fills
-├── roll_calendars/              # Extended CSVs
-├── futures_multiple_prices/     # Extended parquet (deep history preserved)
-├── futures_adjusted_prices/     # Extended parquet (deep history preserved)
-├── spotfx_prices/               # Copied from canonical
-├── consolidation_report.csv     # Conflict log
-└── gap_contracts_manifest.csv   # Gap-fill contract list
+├── futures_contract_prices/     # Steps 1+2: merged + gap-filled
+├── roll_calendars/              # Step 5: extended CSVs
+├── futures_multiple_prices/     # Steps 4+6: deep history + extended
+├── futures_adjusted_prices/     # Steps 4+6: deep history + extended
+├── spotfx_prices/               # Step 4: copied
+├── consolidation_report.csv     # Step 1: conflict log
+└── gap_contracts_manifest.csv   # Step 2: gap-fill contract list
 ```
-
----
 
 ## Summary
 
 | Step | Action | Notes |
 |------|--------|-------|
 | 1 | Merge contract prices | 5 sources, mtime priority |
-| 2 | Build baseline derived data | Canonical + pst-csv-data overlay (40 instruments) |
-| 3 | **Identify & source gap contracts** | **Generate manifest (444 contracts), retrieve from Barchart/Databento, ingest** |
-| 4 | Configure parquet store | Point to consolidated dir |
+| 2 | **Identify & source gap contracts** | **Manifest (444 contracts, 200 instruments), retrieve from Barchart/Databento** |
+| 3 | Configure parquet store | Point to consolidated dir |
+| 4 | Build baseline derived data | Canonical + merge pst-csv-data (append only, preserves sub-hourly) |
 | 5 | Extend roll calendars | Custom builder (merges with existing) |
 | 6 | Extend multiple/adjusted | Production incremental update (preserves history) |
 | 7 | Add new instruments | Init scripts for genuinely new |
