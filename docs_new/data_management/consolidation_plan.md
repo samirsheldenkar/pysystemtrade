@@ -4,12 +4,15 @@
 
 | Directory | Contents | Files | Download Date | Data Range |
 |-----------|----------|-------|--------------|-----------|
-| `futures_dev/` | contract prices | 13,142 | 2025-09-04 | ~Apr 2024 – Jun 2025 |
 | `futures_new/` | contract prices | 22,349 | 2025-11-06 | ~Apr 2024 – Jun 2025 |
-| `futures_20251119/` | contract prices | 18,256 | 2025-11-20 | ~Nov 2024 – Nov 2025 |
 | `futures/` | All 5 data types | 18,447 cp + derived | 2026-02-03 | See gap analysis |
 | `futures_20260204/` | contract prices | 21,820 | 2026-02-12 | ~Feb 2025 – Feb 2026 |
 | `pst-csv-data/` | multiple + adjusted CSVs | 40 instruments | — | To Sep 2025 |
+
+> [!NOTE]
+> **Simplified from 5 to 3 contract price sources:**
+> - `futures_dev/` dropped — `futures_new` is a complete superset (all 13,142 dev files exist in new)
+> - `futures_20251119/` dropped — the 848 files unique to this folder are all `Day@` prefixed (daily-frequency variants). The pipeline uses mixed-frequency (non-prefixed) files, so these are not needed
 
 ## Gap Analysis
 
@@ -37,14 +40,12 @@ Both pst-csv and canonical data are **hourly** (not daily). However, canonical h
 
 ### Step 1: Merge Contract Prices
 
-Merge all 5 sources with `FuturesConsolidator`, oldest→newest:
+Merge 3 sources with `FuturesConsolidator`, oldest→newest:
 
 ```bash
 python -m sysinit.futures.consolidate_futures \
   --sources \
-    /home/samir/data/futures_dev/futures_contract_prices \
     /home/samir/data/futures_new/futures_contract_prices \
-    /home/samir/data/futures_20251119/futures_contract_prices \
     /home/samir/data/futures/futures_contract_prices \
     /home/samir/data/futures_20260204/futures_contract_prices \
   --dest /home/samir/data/consolidated/futures_contract_prices
@@ -65,9 +66,7 @@ import pandas as pd, os, glob
 
 MP_DIR = '/home/samir/data/futures/futures_multiple_prices'
 CP_DIRS = [
-    '/home/samir/data/futures_dev/futures_contract_prices',
     '/home/samir/data/futures_new/futures_contract_prices',
-    '/home/samir/data/futures_20251119/futures_contract_prices',
     '/home/samir/data/futures/futures_contract_prices',
     '/home/samir/data/futures_20260204/futures_contract_prices',
 ]
@@ -278,7 +277,7 @@ For instruments in merged contract prices that don't exist in canonical derived 
 
 | Step | Action | Notes |
 |------|--------|-------|
-| 1 | Merge contract prices | 5 sources, mtime priority |
+| 1 | Merge contract prices | 3 sources, mtime priority |
 | 2 | **Identify & source gap contracts** | **Manifest (444 contracts, 200 instruments), retrieve from Barchart/Databento** |
 | 3 | Configure parquet store | Point to consolidated dir |
 | 4 | Build baseline derived data | Canonical + merge pst-csv-data (append only, preserves sub-hourly) |
