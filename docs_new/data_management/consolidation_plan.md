@@ -65,11 +65,7 @@ Output: /home/samir/data/consolidated/gap_contracts_manifest.csv
 import pandas as pd, os, glob
 
 MP_DIR = '/home/samir/data/futures/futures_multiple_prices'
-CP_DIRS = [
-    '/home/samir/data/futures_new/futures_contract_prices',
-    '/home/samir/data/futures/futures_contract_prices',
-    '/home/samir/data/futures_20260204/futures_contract_prices',
-]
+CONSOLIDATED_CP_DIR = '/home/samir/data/consolidated/futures_contract_prices'
 PST_INSTRUMENTS = set(
     f.replace('.csv', '') for f in os.listdir('/home/samir/pst-csv-data/data/multiple_prices_csv')
     if f.endswith('.csv')
@@ -86,11 +82,10 @@ for mp_file in sorted(os.listdir(MP_DIR)):
     mp_end = mp.index.max()
 
     cp_min = pd.Timestamp.max
-    for d in CP_DIRS:
-        for f in glob.glob(os.path.join(d, f'{inst}#*.parquet')):
-            df = pd.read_parquet(f)
-            if len(df) > 0 and df.index.min() < cp_min:
-                cp_min = df.index.min()
+    for f in glob.glob(os.path.join(CONSOLIDATED_CP_DIR, f'{inst}#*.parquet')):
+        df = pd.read_parquet(f)
+        if len(df) > 0 and df.index.min() < cp_min:
+            cp_min = df.index.min()
 
     if cp_min == pd.Timestamp.max: continue
     gap_days = (cp_min - mp_end).days
