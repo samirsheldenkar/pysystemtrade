@@ -1,0 +1,1506 @@
+{
+  "_meta": {
+    "description": "DataBento symbology mappings for pysystemtrade instruments",
+    "version": "1.0",
+    "created": "2026-03-04",
+    "notes": "Maps pysystemtrade instrument codes to DataBento symbols and datasets. Month codes: F=Jan,G=Feb,H=Mar,J=Apr,K=May,M=Jun,N=Jul,Q=Aug,U=Sep,V=Oct,X=Nov,Z=Dec"
+  },
+  "mappings": {
+    "AEX_mini": {
+      "databento_root": "AEX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "notes": "Eurex AEX Mini Index Futures"
+    },
+    "ALUMINIUM": {
+      "databento_root": "ALI",
+      "dataset": "GLBX.MDP3",
+      "exchange": "COMEX",
+      "schema": "ohlcv-1d",
+      "notes": "COMEX Aluminum Futures"
+    },
+    "ALUMINIUM_LME": {
+      "databento_root": "AH",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Aluminum - verify symbol on DataBento"
+    },
+    "BBCOMM": {
+      "databento_root": "AW",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Bloomberg Commodity Index - verify"
+    },
+    "BITCOIN": {
+      "databento_root": "BTC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Bitcoin Futures"
+    },
+    "BONO": {
+      "databento_root": "BON",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "notes": "Eurex Spanish 10Y Bond"
+    },
+    "BOVESPA": {
+      "databento_root": "IBV",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Bovespa Index - verify symbol"
+    },
+    "BRE": {
+      "databento_root": "BRL",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Brazilian Real Futures"
+    },
+    "BRENT-LAST": {
+      "databento_root": "BZ",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX Brent Last Day Financial"
+    },
+    "BRENT_W": {
+      "databento_root": "B",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Brent Crude Oil"
+    },
+    "BTP3": {
+      "databento_root": "3BT",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex Short-Term BTP - verify"
+    },
+    "BUTTER": {
+      "databento_root": "CB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Cash-Settled Butter"
+    },
+    "BUXL": {
+      "databento_root": "GBX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "notes": "Eurex Euro Buxl 30Y"
+    },
+    "CAD": {
+      "databento_root": "6C",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Canadian Dollar"
+    },
+    "CAD10": {
+      "databento_root": "CG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Canadian 10Y Bond - verify"
+    },
+    "CAD2": {
+      "databento_root": "CGB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Canadian 2Y Bond - verify"
+    },
+    "CAD5": {
+      "databento_root": "CF",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Canadian 5Y Bond - verify"
+    },
+    "CAD_micro": {
+      "databento_root": "MCD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro CAD"
+    },
+    "CANOLA": {
+      "databento_root": "RS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE Canola - verify"
+    },
+    "CH10": {
+      "databento_root": "CONF",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex Swiss Confederation Bond - verify"
+    },
+    "CHEESE": {
+      "databento_root": "CSC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Cash-Settled Cheese"
+    },
+    "CHFJPY": {
+      "databento_root": "CHJ",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME CHF/JPY - verify"
+    },
+    "CHF_micro": {
+      "databento_root": "MSF",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro CHF"
+    },
+    "CHINAA-CON": {
+      "databento_root": "CN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME China A50 - verify if available"
+    },
+    "CLP": {
+      "databento_root": "CHP",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Chilean Peso - verify"
+    },
+    "CNH": {
+      "databento_root": "CNH",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME USD/CNH Offshore"
+    },
+    "CNH-onshore": {
+      "databento_root": "CNY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME USD/CNY Onshore - verify availability"
+    },
+    "COAL": {
+      "databento_root": "ATW",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Rotterdam Coal"
+    },
+    "COAL-GEORDIE": {
+      "databento_root": "UAT",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE Geordie Coal - verify"
+    },
+    "COCOA": {
+      "databento_root": "CC",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Cocoa US"
+    },
+    "COCOA_LDN": {
+      "databento_root": "C",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Cocoa London"
+    },
+    "COFFEE": {
+      "databento_root": "KC",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Coffee"
+    },
+    "COPPER": {
+      "databento_root": "HG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "COMEX",
+      "schema": "ohlcv-1d",
+      "notes": "COMEX Copper"
+    },
+    "COPPER-mini": {
+      "databento_root": "QC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "COMEX",
+      "schema": "ohlcv-1d",
+      "notes": "COMEX Mini Copper"
+    },
+    "COPPER_LME": {
+      "databento_root": "CA",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Copper - verify on DataBento"
+    },
+    "CORN_mini": {
+      "databento_root": "YC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Mini Corn"
+    },
+    "COTTON2": {
+      "databento_root": "CT",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Cotton No. 2"
+    },
+    "CRUDE_ICE": {
+      "databento_root": "WTI",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE WTI Crude - verify"
+    },
+    "CRUDE_W": {
+      "databento_root": "CL",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX WTI Crude Oil"
+    },
+    "CRUDE_W_mini": {
+      "databento_root": "QM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX E-mini Crude Oil"
+    },
+    "CZK": {
+      "databento_root": "CZK",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Czech Koruna"
+    },
+    "DAX": {
+      "databento_root": "FDAX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "notes": "Eurex DAX Futures"
+    },
+    "DJSTX-SMALL": {
+      "databento_root": "SDX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex DJ Stoxx Small - verify"
+    },
+    "DOW": {
+      "databento_root": "YM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Dow Jones ($5)"
+    },
+    "DOW_mini": {
+      "databento_root": "MYM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Micro Dow"
+    },
+    "DX": {
+      "databento_root": "DX",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE US Dollar Index"
+    },
+    "EPRA-EUROPE": {
+      "databento_root": "EPX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EPRA Europe - verify"
+    },
+    "ETHER-micro": {
+      "databento_root": "MET",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro Ether"
+    },
+    "ETHEREUM": {
+      "databento_root": "ETH",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Ethereum Futures"
+    },
+    "EU-AUTO": {
+      "databento_root": "SXA",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Automobile - verify"
+    },
+    "EU-BANKS": {
+      "databento_root": "SX7E",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Banks - verify"
+    },
+    "EU-BASIC": {
+      "databento_root": "SXPP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Basic Materials - verify"
+    },
+    "EU-CHEM": {
+      "databento_root": "SX4E",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Chemicals - verify"
+    },
+    "EU-CONSTRUCTION": {
+      "databento_root": "SXOP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Construction - verify"
+    },
+    "EU-DIV30": {
+      "databento_root": "D3DV",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Div30 - verify"
+    },
+    "EU-DJ-OIL": {
+      "databento_root": "DJEO",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex DJ Oil - verify"
+    },
+    "EU-DJ-TECH": {
+      "databento_root": "DJET",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex DJ Tech - verify"
+    },
+    "EU-DJ-TELECOM": {
+      "databento_root": "DJTC",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex DJ Telecom - verify"
+    },
+    "EU-DJ-UTIL": {
+      "databento_root": "DJU",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex DJ Utilities - verify"
+    },
+    "EU-FOOD": {
+      "databento_root": "SX3E",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Food - verify"
+    },
+    "EU-HEALTH": {
+      "databento_root": "SXDP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Health - verify"
+    },
+    "EU-HOUSE": {
+      "databento_root": "SXQP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Household Goods - verify"
+    },
+    "EU-INSURE": {
+      "databento_root": "SXIP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Insurance - verify"
+    },
+    "EU-MEDIA": {
+      "databento_root": "SXMP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Media - verify"
+    },
+    "EU-MID": {
+      "databento_root": "MDAX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex MDAX - verify"
+    },
+    "EU-OIL": {
+      "databento_root": "SXEP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Oil - verify"
+    },
+    "EU-REALESTATE": {
+      "databento_root": "SX86P",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Real Estate - verify"
+    },
+    "EU-RETAIL": {
+      "databento_root": "SXRP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Retail - verify"
+    },
+    "EU-TECH": {
+      "databento_root": "SX8P",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Tech - verify"
+    },
+    "EU-TRAVEL": {
+      "databento_root": "SXTP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Travel - verify"
+    },
+    "EU-UTILS": {
+      "databento_root": "SX6P",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EU Utilities - verify"
+    },
+    "EUA": {
+      "databento_root": "ECX",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE EU Carbon Allowances - verify"
+    },
+    "EUR": {
+      "databento_root": "6E",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Euro FX"
+    },
+    "EURAUD": {
+      "databento_root": "EAD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME EUR/AUD"
+    },
+    "EURCAD": {
+      "databento_root": "ECD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME EUR/CAD"
+    },
+    "EURCHF": {
+      "databento_root": "RF",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME EUR/CHF"
+    },
+    "EURIBOR": {
+      "databento_root": "FEI",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex EURIBOR - verify"
+    },
+    "EURIBOR-ICE": {
+      "databento_root": "IU",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE EURIBOR - verify"
+    },
+    "EURO600": {
+      "databento_root": "FXXP",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex STOXX 600 - verify"
+    },
+    "EUROSTX-LARGE": {
+      "databento_root": "FXXL",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex Euro Stoxx Large - verify"
+    },
+    "EUROSTX-SMALL": {
+      "databento_root": "FXXS",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex Euro Stoxx Small - verify"
+    },
+    "EUROSTX200-LARGE": {
+      "databento_root": "FXXA",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex Stoxx 200 Large - verify"
+    },
+    "EUR_mini": {
+      "databento_root": "E7",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME E-mini Euro"
+    },
+    "FANG": {
+      "databento_root": "FNG",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE FANG Index - verify"
+    },
+    "FED": {
+      "databento_root": "ZQ",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Fed Funds"
+    },
+    "FEEDCOW": {
+      "databento_root": "GF",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Feeder Cattle"
+    },
+    "FTSE100": {
+      "databento_root": "Z",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE FTSE 100"
+    },
+    "FTSE250": {
+      "databento_root": "Y",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE FTSE 250 - verify"
+    },
+    "FTSECHINAA": {
+      "databento_root": "XCA",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX FTSE China A50 - verify"
+    },
+    "FTSECHINAH": {
+      "databento_root": "XCH",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX FTSE China H50 - verify"
+    },
+    "FTSEINDO": {
+      "databento_root": "XIN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX FTSE Indonesia - verify"
+    },
+    "FTSETAIWAN": {
+      "databento_root": "XTT",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX FTSE Taiwan - verify"
+    },
+    "FTSEVIET": {
+      "databento_root": "XFV",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX FTSE Vietnam - verify"
+    },
+    "GAS-LAST": {
+      "databento_root": "HH",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX Natural Gas Last Day"
+    },
+    "GAS-PEN": {
+      "databento_root": "HP",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX Natural Gas Penultimate"
+    },
+    "GASOIL": {
+      "databento_root": "G",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Low Sulphur Gasoil"
+    },
+    "GASOILINE": {
+      "databento_root": "RB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX RBOB Gasoline"
+    },
+    "GASOILINE_ICE": {
+      "databento_root": "RBS",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE RBOB - verify"
+    },
+    "GASOILINE_micro": {
+      "databento_root": "MRB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "NYMEX Micro Gasoline - verify"
+    },
+    "GAS_US": {
+      "databento_root": "NG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "NYMEX",
+      "schema": "ohlcv-1d",
+      "notes": "NYMEX Henry Hub Natural Gas"
+    },
+    "GBPCHF": {
+      "databento_root": "RP",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME GBP/CHF"
+    },
+    "GBPEUR": {
+      "databento_root": "RP",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME GBP/EUR - verify symbol"
+    },
+    "GBPJPY": {
+      "databento_root": "PJY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME GBP/JPY"
+    },
+    "GBP_micro": {
+      "databento_root": "M6B",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro GBP"
+    },
+    "GICS": {
+      "databento_root": "GICS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME GICS - verify availability"
+    },
+    "GILT": {
+      "databento_root": "G",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Long Gilt"
+    },
+    "GOLD": {
+      "databento_root": "GC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "COMEX",
+      "schema": "ohlcv-1d",
+      "notes": "COMEX Gold"
+    },
+    "HANG": {
+      "databento_root": "HSI",
+      "dataset": "XHKG.ITCH",
+      "exchange": "HKEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Hang Seng Index - verify dataset"
+    },
+    "HANGENT": {
+      "databento_root": "HHI",
+      "dataset": "XHKG.ITCH",
+      "exchange": "HKEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Hang Seng Enterprises - verify"
+    },
+    "HANGENT_mini": {
+      "databento_root": "MHI",
+      "dataset": "XHKG.ITCH",
+      "exchange": "HKEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Mini HHI - verify"
+    },
+    "HANGTECH": {
+      "databento_root": "HTI",
+      "dataset": "XHKG.ITCH",
+      "exchange": "HKEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Hang Seng Tech - verify"
+    },
+    "HANG_mini": {
+      "databento_root": "MCH",
+      "dataset": "XHKG.ITCH",
+      "exchange": "HKEX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Mini Hang Seng - verify"
+    },
+    "HEATOIL-ICE": {
+      "databento_root": "O",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Heating Oil"
+    },
+    "HIGHYIELD": {
+      "databento_root": "IBX",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CBOT High Yield - verify"
+    },
+    "HOUSE-US": {
+      "databento_root": "HOU",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Housing index - verify"
+    },
+    "IBEX": {
+      "databento_root": "IBX",
+      "dataset": "XEUR.EOBI",
+      "exchange": "MEFF",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "MEFF IBEX 35 - verify dataset"
+    },
+    "IBEX_mini": {
+      "databento_root": "MIB",
+      "dataset": "XEUR.EOBI",
+      "exchange": "MEFF",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Mini IBEX - verify"
+    },
+    "IG": {
+      "databento_root": "IG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CBOT IG - verify"
+    },
+    "INR": {
+      "databento_root": "SIR",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME INR/USD - verify"
+    },
+    "IRON": {
+      "databento_root": "TIO",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "notes": "SGX Iron Ore"
+    },
+    "IRS": {
+      "databento_root": "IRS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Interest Rate Swap - verify"
+    },
+    "JGB": {
+      "databento_root": "JB",
+      "dataset": "XOSE.ITCH",
+      "exchange": "OSE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "JGB - verify dataset"
+    },
+    "JGB-SGX-mini": {
+      "databento_root": "JGB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Mini JGB - verify"
+    },
+    "JGB-mini": {
+      "databento_root": "JBM",
+      "dataset": "XOSE.ITCH",
+      "exchange": "OSE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Mini JGB - verify"
+    },
+    "JP-REALESTATE": {
+      "databento_root": "JRE",
+      "dataset": "XOSE.ITCH",
+      "exchange": "OSE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Japan REIT - verify"
+    },
+    "JPY_mini": {
+      "databento_root": "MJY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro JPY"
+    },
+    "KOSDAQ": {
+      "databento_root": "QKQ",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX KOSDAQ - verify"
+    },
+    "KOSPI": {
+      "databento_root": "VK",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "notes": "SGX KOSPI"
+    },
+    "KRWUSD": {
+      "databento_root": "KRW",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME KRW/USD - verify"
+    },
+    "KRWUSD_mini": {
+      "databento_root": "KWM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Mini KRW - verify"
+    },
+    "LEAD_LME": {
+      "databento_root": "PB",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Lead - verify"
+    },
+    "LUMBER-new": {
+      "databento_root": "LBR",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Lumber (new contract)"
+    },
+    "MIB": {
+      "databento_root": "FTS",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex MIB 40 - verify"
+    },
+    "MILK": {
+      "databento_root": "DA",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Class III Milk"
+    },
+    "MILKDRY": {
+      "databento_root": "DY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Nonfat Dry Milk"
+    },
+    "MILKWET": {
+      "databento_root": "GNF",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Whey - verify"
+    },
+    "MILLWHEAT": {
+      "databento_root": "MW",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CBOT Minneapolis Wheat - verify"
+    },
+    "MSCIASIA": {
+      "databento_root": "MAS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX MSCI Asia - verify"
+    },
+    "MSCIEAFA": {
+      "databento_root": "MFS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX MSCI EAFE - verify"
+    },
+    "MSCIEMASIA": {
+      "databento_root": "MME",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX MSCI EM Asia - verify"
+    },
+    "MSCIWORLD": {
+      "databento_root": "MWS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX MSCI World - verify"
+    },
+    "NICKEL_LME": {
+      "databento_root": "NI",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Nickel - verify"
+    },
+    "NIKKEI400": {
+      "databento_root": "NK4",
+      "dataset": "XOSE.ITCH",
+      "exchange": "OSE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Nikkei 400 - verify"
+    },
+    "NOK": {
+      "databento_root": "NOK",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Norwegian Krone"
+    },
+    "OATIES": {
+      "databento_root": "ZO",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Oats"
+    },
+    "OJ": {
+      "databento_root": "OJ",
+      "dataset": "IFUS.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Orange Juice"
+    },
+    "OMX": {
+      "databento_root": "OMXS",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "OMX Stockholm - verify dataset"
+    },
+    "PLN": {
+      "databento_root": "PLN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Polish Zloty"
+    },
+    "R1000": {
+      "databento_root": "RF2",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Russell 1000 - verify"
+    },
+    "REDWHEAT": {
+      "databento_root": "KE",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT KC Wheat"
+    },
+    "RICE": {
+      "databento_root": "ZR",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Rough Rice"
+    },
+    "ROBUSTA": {
+      "databento_root": "RC",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Robusta Coffee"
+    },
+    "RUBBER": {
+      "databento_root": "RSS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Rubber - verify"
+    },
+    "RUR": {
+      "databento_root": "RUB",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Russian Ruble - verify"
+    },
+    "RUSSELL": {
+      "databento_root": "RTY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME E-mini Russell 2000"
+    },
+    "RUSSELL_mini": {
+      "databento_root": "M2K",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Micro Russell 2000"
+    },
+    "SARONA": {
+      "databento_root": "SAR",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Saron - verify availability"
+    },
+    "SEK": {
+      "databento_root": "SEK",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME Swedish Krona"
+    },
+    "SGD": {
+      "databento_root": "SGU",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "notes": "SGX SGD"
+    },
+    "SGD_mini": {
+      "databento_root": "USD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Mini SGD - verify"
+    },
+    "SGX": {
+      "databento_root": "SG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Index - verify"
+    },
+    "SHATZ": {
+      "databento_root": "GBS",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "notes": "Eurex Schatz 2Y"
+    },
+    "SILVER": {
+      "databento_root": "SI",
+      "dataset": "GLBX.MDP3",
+      "exchange": "COMEX",
+      "schema": "ohlcv-1d",
+      "notes": "COMEX Silver"
+    },
+    "SMI-MID": {
+      "databento_root": "SMM",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Eurex SMI Mid - verify"
+    },
+    "SONIA3": {
+      "databento_root": "SON",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ICE 3M SONIA - verify"
+    },
+    "SOYBEAN": {
+      "databento_root": "ZS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Soybeans"
+    },
+    "SOYMEAL": {
+      "databento_root": "ZM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Soybean Meal"
+    },
+    "SOYOIL": {
+      "databento_root": "ZL",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Soybean Oil"
+    },
+    "SP400": {
+      "databento_root": "EMD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME S&P 400 Midcap"
+    },
+    "SPI200": {
+      "databento_root": "SPI",
+      "dataset": "GLBX.MDP3",
+      "exchange": "ASX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "ASX SPI 200 - verify dataset"
+    },
+    "STEEL": {
+      "databento_root": "HRC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME US HRC Steel"
+    },
+    "SWISSLEAD": {
+      "databento_root": "SWL",
+      "dataset": "XEUR.EOBI",
+      "exchange": "EUREX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Swiss Leader Index - verify"
+    },
+    "TIN_LME": {
+      "databento_root": "SN",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Tin - verify"
+    },
+    "TOPIX": {
+      "databento_root": "TPX",
+      "dataset": "XOSE.ITCH",
+      "exchange": "OSE",
+      "schema": "ohlcv-1d",
+      "notes": "OSE Topix"
+    },
+    "TWD": {
+      "databento_root": "TWD",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX TWD - verify"
+    },
+    "TWD-mini": {
+      "databento_root": "TWM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Mini TWD - verify"
+    },
+    "US-DISCRETE": {
+      "databento_root": "DIS",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Discretionary - verify"
+    },
+    "US-ENERGY": {
+      "databento_root": "UEN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Energy - verify"
+    },
+    "US-FINANCE": {
+      "databento_root": "FIN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Finance - verify"
+    },
+    "US-HEALTH": {
+      "databento_root": "HLT",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Health - verify"
+    },
+    "US-INDUSTRY": {
+      "databento_root": "IND",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Industrial - verify"
+    },
+    "US-MATERIAL": {
+      "databento_root": "MAT",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Materials - verify"
+    },
+    "US-PROPERTY": {
+      "databento_root": "RSP",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Property - verify"
+    },
+    "US-REALESTATE": {
+      "databento_root": "REI",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector REIT - verify"
+    },
+    "US-STAPLES": {
+      "databento_root": "STA",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Staples - verify"
+    },
+    "US-TECH": {
+      "databento_root": "TEC",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Tech - verify"
+    },
+    "US-UTILS": {
+      "databento_root": "UTL",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "US Sector Utilities - verify"
+    },
+    "US10U": {
+      "databento_root": "UXY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "Ultra 10Y Note - verify"
+    },
+    "US3": {
+      "databento_root": "Z3N",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT 3Y Treasury"
+    },
+    "VIX_mini": {
+      "databento_root": "VXM",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOE",
+      "schema": "ohlcv-1d",
+      "notes": "CBOE Mini VIX"
+    },
+    "VNKI": {
+      "databento_root": "VN",
+      "dataset": "GLBX.MDP3",
+      "exchange": "SGX",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "SGX Nikkei VN - verify"
+    },
+    "WHEAT_ICE": {
+      "databento_root": "T",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "notes": "ICE Wheat"
+    },
+    "WHEAT_mini": {
+      "databento_root": "XW",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CBOT",
+      "schema": "ohlcv-1d",
+      "notes": "CBOT Mini Wheat"
+    },
+    "WHEY": {
+      "databento_root": "DG",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME Dry Whey - verify"
+    },
+    "YENEUR": {
+      "databento_root": "RY",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "CME JPY/EUR - verify"
+    },
+    "ZAR": {
+      "databento_root": "ZAR",
+      "dataset": "GLBX.MDP3",
+      "exchange": "CME",
+      "schema": "ohlcv-1d",
+      "notes": "CME South African Rand"
+    },
+    "ZINC_LME": {
+      "databento_root": "ZNC",
+      "dataset": "IFEU.IMPACT",
+      "exchange": "ICE",
+      "schema": "ohlcv-1d",
+      "needs_verification": true,
+      "notes": "LME Zinc - verify"
+    }
+  }
+}
