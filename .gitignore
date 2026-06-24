@@ -10,6 +10,7 @@ build
 private
 restats
 .DS_Store
+*.bak
 
 # Coverage reports
 .coverage

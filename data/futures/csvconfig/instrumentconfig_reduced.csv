@@ -1,0 +1,54 @@
+Instrument,Description,Pointsize,Currency,AssetClass,PerBlock,Percentage,PerTrade,Region
+AUD,AUDUSD currency,100000,USD,FX,2.47,0,0,US
+BOBL,German 5 year bond Bobl,1000,EUR,Bond,2,0,0,EMEA
+BTP,Italian 10 year bond BTP,1000,EUR,Bond,2,0,0,EMEA
+BUND,German 10 year bond Bund,1000,EUR,Bond,2,0,0,EMEA
+BUXL,German Buxl 15 to 30 year bond,1000,EUR,Bond,2,0,0,EMEA
+CAC,French equity index CAC40,10,EUR,Equity,2,0,0,EMEA
+CAD,CADUSD currency,100000,USD,FX,2.47,0,0,US
+CHF,CHFUSD currency,125000,USD,FX,1.5,0,0,US
+COCOA,Cocoa NY,10,USD,Ags,2.97,0,0,US
+COFFEE,Coffee,375,USD,Ags,2.97,0,0,US
+COPPER,Copper,25000,USD,Metals,2.47,0,0,US
+CORN,Corn,50,USD,Ags,2.97,0,0,US
+COTTON,NYMEX Cotton index,50000,USD,Ags,2.32,0,0,US
+CRUDE_W,Light sweet crude Winter,1000,USD,OilGas,2.37,0,0,US
+DAX,DAX 30 Index (Deutsche Aktien Xchange 30),1,EUR,Equity,0.4,0,0,EMEA
+DOW,Micro E-Mini Dow Jones Industrial Average Index,0.5,USD,Equity,0.62,0,0,US
+EUR,EURUSD currency,125000,USD,FX,2.47,0,0,US
+EURIBOR,Three Month EURIBOR,2500,EUR,Bond,2,0,0,EMEA
+EUROSTX,European equity index EUROSTOXX50,10,EUR,Equity,2,0,0,EMEA
+FTSE100,FTSE100 Index,10,GBP,Equity,1.7,0,0,EMEA
+GAS_US,Natural gas US,10000,USD,OilGas,2.47,0,0,US
+GASOILINE,RBOB Gasoline US,42000,USD,OilGas,2.37,0,0,US
+GBP,GBPUSD currency,62500,USD,FX,2.47,0,0,US
+GILT,UK 10 year bonds Long Gilt,1000,GBP,Bond,0,0,0,EMEA
+GOLD,Gold,100,USD,Metals,2.47,0,0,US
+HANG,Hong Kong equity index Hang Seng,50,HKD,Equity,30,0,0,ASIA
+HEATOIL,Heating oil,42000,USD,OilGas,2.37,0,0,US
+IBEX,Spanish equity index IBEX,10,EUR,Equity,3,0,0,EMEA
+JGB,Standardized 6% 10-Year Japanese Government Bond,1000000,JPY,Bond,500,0,0,ASIA
+JPY,JPYUSD currency,12500000,USD,FX,2.47,0,0,US
+KOSPI,Korean equity index KOSPI,250000,KRW,Equity,0,0.0004,0,ASIA
+LEANHOG,Lean hogs,400,USD,Ags,2.97,0,0,US
+LIVECOW,Live cattle,400,USD,Ags,2.97,0,0,US
+MIB,FTSE MIB INDEX,5,EUR,Equity,3,0,0,EMEA
+MXP,MEXUSD currency,500000,USD,FX,2.47,0,0,US
+NASDAQ,US equity index Nasdaq,20,USD,Equity,2.2,0,0,US
+NIKKEI,Nikkei 225 Mini,100,JPY,Equity,40,0,0,ASIA
+NZD,NZDUSD currency,100000,USD,FX,2.47,0,0,US
+OMX,OMX Helsinki 25 Index,10,EUR,Equity,2,0,0,EMEA
+RUSSELL,Micro E-Mini Russell 2000 Index,5,USD,Equity,0.62,0,0,US
+SHATZ,German 2 year bond Schatz,1000,EUR,Bond,2,0,0,EMEA
+SILVER,NYMEX Silver Index,1000,USD,Metals,1.27,0,0,US
+SOFR,Secured Overnight Financing Rate 3-month average of rates,2500,USD,Bond,2.12,0,0,US
+SOYBEAN,Soybean,50,USD,Ags,2.97,0,0,US
+SOYOIL,Soybean oil,600,USD,Ags,2.97,0,0,US
+SP500,US equity index S&P500,50,USD,Equity,2.25,0,0,US
+SPI200,ASX SPI200 Index,25,AUD,Equity,5,0,0,ASIA
+SUGAR11,Sugar #11,1120,USD,Ags,2.97,0,0,US
+US10,US 10 year bond note,1000,USD,Bond,1.67,0,0,US
+US2,US 2 year bond note,2000,USD,Bond,1.51,0,0,US
+US20,US 20 year bond,1000,USD,Bond,1.74,0,0,US
+US5,US 5 year bond note,1000,USD,Bond,1.51,0,0,US
+WHEAT,Wheat,50,USD,Ags,2.97,0,0,US
