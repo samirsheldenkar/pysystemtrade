@@ -97,3 +97,26 @@ class TestConfig:
         monkeypatch.setenv(PRIVATE_CONFIG_DIR_ENV_VAR, "sysdata.tests")
         config = get_saved_trading_hours()
         assert config["MET"]["Monday"][0].closing_time == datetime.time(15)
+
+    def test_env_var_expansion(self, monkeypatch):
+        monkeypatch.setenv("TEST_SMTP_PORT", "587")
+        monkeypatch.setenv("TEST_SMTP_SERVER", "smtp.gmail.com")
+
+        yaml_content = """
+        email_port: ${TEST_SMTP_PORT:465}
+        email_server: ${TEST_SMTP_SERVER}
+        email_address: ${TEST_EMAIL_ADDRESS:default@example.com}
+        email_pwd: ${TEST_EMAIL_PWD}
+        email_pwd_quoted: "${TEST_EMAIL_PWD}"
+        """
+        import yaml
+        from sysdata.config.private_config import expand_env_vars
+
+        expanded = expand_env_vars(yaml_content)
+        config_dict = yaml.load(expanded, Loader=yaml.FullLoader)
+
+        assert config_dict["email_port"] == 587
+        assert config_dict["email_server"] == "smtp.gmail.com"
+        assert config_dict["email_address"] == "default@example.com"
+        assert config_dict["email_pwd"] is None
+        assert config_dict["email_pwd_quoted"] == ""

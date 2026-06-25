@@ -9,6 +9,7 @@ Order of preferences is - passed in command line to calculation method,
 from syscore.fileutils import resolve_path_and_filename_for_package
 from syscore.constants import arg_not_supplied
 import yaml
+from sysdata.config.private_config import expand_env_vars
 
 DEFAULT_FILENAME = "sysdata.config.defaults.yaml"
 
@@ -22,7 +23,9 @@ def get_system_defaults_dict(filename: str = arg_not_supplied) -> dict:
         filename = DEFAULT_FILENAME
     default_file = resolve_path_and_filename_for_package(filename)
     with open(default_file) as file_to_parse:
-        default_dict = yaml.load(file_to_parse, Loader=yaml.FullLoader)
+        content = file_to_parse.read()
+    expanded_content = expand_env_vars(content)
+    default_dict = yaml.load(expanded_content, Loader=yaml.FullLoader)
 
     return default_dict
 

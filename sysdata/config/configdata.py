@@ -20,6 +20,7 @@ from syscore.constants import arg_not_supplied
 from sysdata.config.defaults import get_system_defaults_dict
 from sysdata.config.private_config import (
     get_private_config_as_dict,
+    expand_env_vars,
 )
 
 from syslogging.logger import *
@@ -141,7 +142,9 @@ class Config(object):
             # must be a file YAML'able, from which we load the
             filename = resolve_path_and_filename_for_package(config_item)
             with open(filename) as file_to_parse:
-                dict_to_parse = yaml.load(file_to_parse, Loader=yaml.FullLoader)
+                content = file_to_parse.read()
+            expanded_content = expand_env_vars(content)
+            dict_to_parse = yaml.load(expanded_content, Loader=yaml.FullLoader)
 
             self._create_config_from_dict(dict_to_parse)
 
