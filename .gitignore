@@ -11,6 +11,7 @@ private
 restats
 .DS_Store
 *.bak
+logs
 
 # Coverage reports
 .coverage
