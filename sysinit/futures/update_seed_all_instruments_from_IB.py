@@ -144,7 +144,7 @@ def update_seed_price_data_for_contract_at_frequency(
 
     # Load existing data
     old_prices = diag_prices.get_prices_at_frequency_for_contract_object(
-        contract_object, frequency=frequency, return_empty=True
+        contract_object, frequency=frequency
     )
 
     if len(old_prices) > 0:
