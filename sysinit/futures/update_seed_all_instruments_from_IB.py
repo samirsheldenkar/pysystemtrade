@@ -1,4 +1,5 @@
 import time
+import sys
 import logging
 import os
 from datetime import datetime
@@ -219,9 +220,9 @@ def update_seed_price_data_for_instrument(instrument_code: str):
         update_seed_price_data_for_contract(data=data, contract_object=contract_object)
 
 
-def update_seed_all_instruments_from_IB():
+def update_seed_all_instruments_from_IB(instruments_to_process=None):
     """
-    Seeds/Updates price data from Interactive Brokers for all instruments in the system
+    Seeds/Updates price data from Interactive Brokers for all instruments (or a specified list) in the system
     preserving existing non-overlapping data and preferring IB data on overlap.
     """
     # Setup logging
@@ -231,8 +232,11 @@ def update_seed_all_instruments_from_IB():
     data = dataBlob()
     diag_instruments = diagInstruments(data)
 
-    # Get list of all instruments
-    all_instruments = diag_instruments.get_list_of_instruments()
+    if instruments_to_process is None:
+        # Get list of all instruments
+        all_instruments = diag_instruments.get_list_of_instruments()
+    else:
+        all_instruments = instruments_to_process
 
     logging.info(f"Found {len(all_instruments)} instruments to process")
     logging.info(f"Instruments to process: {', '.join(all_instruments)}")
@@ -278,8 +282,16 @@ def update_seed_all_instruments_from_IB():
 
 
 if __name__ == "__main__":
-    logging.info(
-        "Starting to update/seed price data for all instruments from IB (preserving non-overlapping data)"
-    )
-    update_seed_all_instruments_from_IB()
-    logging.info("Completed updating price data for all instruments")
+    args = sys.argv[1:]
+    if len(args) > 0:
+        instruments = args
+        logging.info(
+            f"Starting to update/seed price data for specified instruments: {', '.join(instruments)}"
+        )
+    else:
+        instruments = None
+        logging.info(
+            "Starting to update/seed price data for all instruments from IB (preserving non-overlapping data)"
+        )
+    update_seed_all_instruments_from_IB(instruments_to_process=instruments)
+    logging.info("Completed updating price data")
