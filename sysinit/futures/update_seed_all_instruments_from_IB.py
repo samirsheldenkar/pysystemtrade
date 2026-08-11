@@ -205,8 +205,7 @@ def update_seed_price_data_for_contract(
     )
 
 
-def update_seed_price_data_for_instrument(instrument_code: str):
-    data = dataBlob()
+def update_seed_price_data_for_instrument(data: dataBlob, instrument_code: str):
     data_broker = dataBroker(data)
 
     list_of_contracts = data_broker.get_list_of_contract_dates_for_instrument_code(
@@ -229,45 +228,45 @@ def update_seed_all_instruments_from_IB(instruments_to_process=None):
     log_file = setup_logging()
     logging.info(f"Log file created at: {log_file}")
 
-    data = dataBlob()
-    diag_instruments = diagInstruments(data)
+    with dataBlob() as data:
+        diag_instruments = diagInstruments(data)
 
-    if instruments_to_process is None:
-        # Get list of all instruments
-        all_instruments = diag_instruments.get_list_of_instruments()
-    else:
-        all_instruments = instruments_to_process
+        if instruments_to_process is None:
+            # Get list of all instruments
+            all_instruments = diag_instruments.get_list_of_instruments()
+        else:
+            all_instruments = instruments_to_process
 
-    logging.info(f"Found {len(all_instruments)} instruments to process")
-    logging.info(f"Instruments to process: {', '.join(all_instruments)}")
+        logging.info(f"Found {len(all_instruments)} instruments to process")
+        logging.info(f"Instruments to process: {', '.join(all_instruments)}")
 
-    success_count = 0
-    error_count = 0
-    error_instruments = []
+        success_count = 0
+        error_count = 0
+        error_instruments = []
 
-    for instrument_code in all_instruments:
-        try:
-            logging.info(f"\nProcessing instrument: {instrument_code}")
-            start_time = time.time()
+        for instrument_code in all_instruments:
+            try:
+                logging.info(f"\nProcessing instrument: {instrument_code}")
+                start_time = time.time()
 
-            update_seed_price_data_for_instrument(instrument_code)
+                update_seed_price_data_for_instrument(data, instrument_code)
 
-            end_time = time.time()
-            duration = end_time - start_time
-            logging.info(
-                f"Successfully processed {instrument_code} in {duration:.2f} seconds"
-            )
-            success_count += 1
+                end_time = time.time()
+                duration = end_time - start_time
+                logging.info(
+                    f"Successfully processed {instrument_code} in {duration:.2f} seconds"
+                )
+                success_count += 1
 
-            # Add a small delay to avoid overwhelming IB
-            time.sleep(1)
+                # Add a small delay to avoid overwhelming IB
+                time.sleep(1)
 
-        except Exception as e:
-            error_msg = f"Error processing {instrument_code}: {str(e)}"
-            logging.error(error_msg, exc_info=True)
-            error_count += 1
-            error_instruments.append((instrument_code, str(e)))
-            continue
+            except Exception as e:
+                error_msg = f"Error processing {instrument_code}: {str(e)}"
+                logging.error(error_msg, exc_info=True)
+                error_count += 1
+                error_instruments.append((instrument_code, str(e)))
+                continue
 
     # Log summary
     logging.info("\n=== Processing Summary ===")
