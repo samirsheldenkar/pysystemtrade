@@ -228,7 +228,8 @@ def update_seed_all_instruments_from_IB(instruments_to_process=None):
     log_file = setup_logging()
     logging.info(f"Log file created at: {log_file}")
 
-    with dataBlob() as data:
+    data = dataBlob()
+    try:
         diag_instruments = diagInstruments(data)
 
         if instruments_to_process is None:
@@ -266,7 +267,34 @@ def update_seed_all_instruments_from_IB(instruments_to_process=None):
                 logging.error(error_msg, exc_info=True)
                 error_count += 1
                 error_instruments.append((instrument_code, str(e)))
+
+                if "Not connected" in str(e) or "ConnectionError" in type(e).__name__:
+                    logging.warning(
+                        f"IB connection error detected while processing {instrument_code}. Attempting to reconnect..."
+                    )
+                    try:
+                        data.close()
+                    except Exception:
+                        pass
+                    for attempt in range(1, 4):
+                        logging.info(
+                            f"Reconnection attempt {attempt}/3 in 5 seconds..."
+                        )
+                        time.sleep(5)
+                        try:
+                            data = dataBlob()
+                            logging.info("Successfully reconnected to IB Gateway.")
+                            break
+                        except Exception as reconn_err:
+                            logging.error(
+                                f"Reconnect attempt {attempt} failed: {reconn_err}"
+                            )
                 continue
+    finally:
+        try:
+            data.close()
+        except Exception:
+            pass
 
     # Log summary
     logging.info("\n=== Processing Summary ===")
